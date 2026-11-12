@@ -41,7 +41,7 @@ def run_backtest(candles: pd.DataFrame, target_position: pd.Series, config: Back
     for timestamp, candle in data.iterrows():
         price = float(candle["open"])
         desired_value = cash + shares * price
-        desired_shares = (desired_value * float(weights.loc[timestamp])) / price
+        desired_shares = (desired_value * float(weights.loc[timestamp])) / (price * (1.0 + cost_rate))
         delta = desired_shares - shares
         traded_value = abs(delta) * price
         costs = traded_value * cost_rate
